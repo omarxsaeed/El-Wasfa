@@ -1,0 +1,142 @@
+{% extends "layout.html" %}
+{% block title %}
+    Recipes
+{% endblock %}
+
+{% block main %}
+        <div class="container">
+            <h1 class="pb-1 recipe-heading">{{ recipe.name }}</h1>
+            {% if recipe.author == current_user %}
+                <div class="pb-1">   
+                    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('recipes.update_recipe', recipe_id=recipe.id) }}">Update</a>
+                    <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+                </div>
+            {% endif %}
+            <img src="{{ recipe.picture }}" class="recipe-image pb-4" alt="{{ recipe.name }} picture">
+            <div class="row border-top border-bottom">
+                <div class="col timers">
+                    <div>Prep</div>
+                    <div>{{ recipe.ready }}m</div>
+                </div>
+                <div class="col timers">
+                    <div>Cook</div>
+                    <div>{{ recipe.cook }}m</div>
+                </div>
+                <div class="col timers">
+                    <div>Ready In</div>
+                    <div>{{ recipe.ready }}m</div>
+                </div>
+            </div>
+            <p class="text-muted pt-3">Recipe By: <a href="{{ url_for('recipes.recipe', recipe_id=recipe.id) }}">{{ recipe.author.displayname}}</a></p>
+            <p class="pb-5 description">"{{ recipe.description }}"</p>
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    <h2 class="recipe-heading">Ingredients</h2>
+                    <ol class="px-4">
+                        {% for ingredient in ingredients %}
+                            {% if ingredient.recipe_id == recipe.id %}
+                                <li>{{ ingredient.ingredient }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ol>
+                </div>
+                <div class="col-md-6 col-12">
+                    <h2 class="recipe-heading">Directions</h2>
+                    <ol class="px-4">
+                        {% for direction in directions %}
+                            {% if direction.recipe_id == recipe.id %}
+                                <li>{{ direction.direction }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="border-bottom border-top mb-3">
+                <h2 class="recipe-heading pt-2 pb-2">Ratings & Reviews</h2>
+            </div>
+            {% for comment in comments.items %}
+                <div class="border-bottom pb-3 mt-4">
+                    <h3 class="recipe-heading pb-3">{{ comment.title }}</h3>
+                    <h6>{{ comment.commenter.displayname }}</h6>
+                    <small class="text-muted">{{ comment.date_posted.strftime('%Y-%m-%d') }}</small>
+                    <p class="recipe-heading pt-4">{{ comment.comment }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="container pt-5 recipe-pagination">
+            {% for page_num in comments.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                {% if page_num %}
+                    {% if comments.page == page_num %}
+                        <a class="btn btn-primary mb-4" href="{{ url_for('recipes.recipe', recipe_id=recipe.id, page=page_num) }}">{{ page_num }}</a>
+                    {% else %}
+                        <a class="btn btn-outline-primary mb-4" href="{{ url_for('recipes.recipe', recipe_id=recipe.id, page=page_num) }}">{{ page_num }}</a>
+                    {% endif %}
+                {% else %}
+                    ...
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% if current_user.is_authenticated %}
+            <div class="container">
+                <form method="POST" action="">
+                    {{ form.hidden_tag() }}
+                    <fieldset class="form-group">
+                        <legend class="border-bottom mb-4 recipe-heading">Write a comment</legend>
+                        <div class="form-group">
+                            {{ form.title.label(class="form-control-label") }}
+                            {% if form.title.errors %}
+                                {{ form.title(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.title.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.title(class="form-control") }}
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form.comment.label(class="form-control-label") }}
+                            {% if form.comment.errors %}
+                                {{ form.comment(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.comment.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.comment(class="form-control") }}
+                            {% endif %}
+                        </div>
+                    </fieldset>
+                    <div class="form-group">
+                        {{ form.submit(class="btn btn-outline-secondary") }}
+                    </div>
+                </form>    
+            </div>
+        {% endif %}    
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete Recipe?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this recipe?</p>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <form action="{{ url_for('recipes.delete_recipe', recipe_id=recipe.id) }}" method="POST">
+                <input class="btn btn-danger" type="submit" value="Delete">
+            </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

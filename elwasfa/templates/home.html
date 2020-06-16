@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  Main
+{% endblock %}
+
+{% block main %}
+    <div class="row row-cols-1 row-cols-md-3">
+      {% for recipe in recipes %}
+        <div class="col mb-4">
+          <div class="card h-100">
+            <img style="height: 300px;" src="{{recipe.picture}}" class="card-img-top" alt="{{ recipe.name }} picture">
+            <div class="card-body">
+              <h5 class="card-title">{{ recipe.name }}</h5>
+            </div>
+            <div class="card-footer">
+              <div class="row">
+                <div class="col">
+                  <p class="card-text pt-2">By: <a href="{{ url_for('recipes.user_recipes', username=recipe.author.username) }}">{{ recipe.author.displayname }}</a></p>
+                </div>
+                <div class="col">
+                  <a class="float-right btn btn-primary" type="submit" href="{{ url_for('recipes.recipe', recipe_id=recipe.id) }}">Read More</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}  
+    </div>
+{% endblock %}

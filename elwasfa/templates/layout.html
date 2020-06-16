@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fjalla+One">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Manrope">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cairo">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oleo+Script">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Website Icon -->
+    <link href="{{ url_for('static', filename='icon.png') }}" rel="icon">
+    <!-- My CSS Sheet -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='updatedsheet11.css') }}">
+    <title>El-Wasfa: {% block title %}{% endblock %}</title>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-md navbar-light bg-light border">
+      <a class="navbar-brand" href="/"><span><img class="brand-logo" src="{{ url_for('static', filename='logo.ico') }}" alt=""> El-Wasfa</span></a>
+      <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbar" data-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar">
+      {% if current_user.is_authenticated %}
+        <ul class="navbar-nav mr-auto mt-2">
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('recipes.add_recipe') }}"><i class="fas fa-plus"></i> Add Recipe</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('recipes.user_recipes', username=current_user.username) }}"><i class="fas fa-hamburger"></i> My Recipes</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('main.contact') }}"><i class="fas fa-envelope"></i> Contact Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('main.about') }}"><i class="fas fa-info-circle"></i> About</a></li>
+        </ul>
+        <ul class="navbar-nav ml-auto mt-2">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('users.profile') }}">
+              <img style="height: 25px; width: 25px;" src="{{ current_user.image_file }}" alt="{{current_user.username}}'s picture" class="rounded-circle">
+              {{current_user.displayname}}
+            </a>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('users.logout') }}"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
+        </ul>
+      {% else %}
+        <ul class="navbar-nav mr-auto mt-2">
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('main.contact') }}"><i class="fas fa-envelope"></i> Contact Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('main.about') }}"><i class="fas fa-info-circle"></i> About</a></li>
+        </ul>
+        <ul class="navbar-nav ml-auto mt-2">
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('users.register') }}"><i class="fas fa-user-plus"></i> Register</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('users.login') }}"><i class="fas fa-sign-in-alt"></i> Log In</a></li>
+        </ul>
+      {% endif %}
+      </div>
+    </nav>
+    <main role="main">
+      <div class="container p-5">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+        {% block main %}
+        {% endblock %}
+      </div>
+    </main>
+    <!-- Footer -->
+    <footer class="w-100 page-footer font-small pt-4">
+      <!-- Footer Elements -->
+      <div class="container">
+        <!-- Grid row-->
+        <div class="row">
+          <!-- Grid column -->
+          <div class="col-md-12">
+            <div class="mb-3 d-flex justify-content-center">
+              <!-- Facebook -->
+              <a class="fb-ic social-media-icons" href="https://www.facebook.com/OmarSaeedXO/">
+                <i class="fab fa-facebook-f fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+              </a>
+              <!--Linkedin -->
+              <a class="li-ic social-media-icons" href="https://www.linkedin.com/in/xomarsaeed/">
+                <i class="fab fa-linkedin-in fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+              </a>
+              <!--Instagram-->
+              <a class="ins-ic social-media-icons" href="https://www.instagram.com/xomarsaeed/">
+                <i class="fab fa-instagram fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+              </a>
+              <!--Github-->
+              <a class="git-ic social-media-icons" href="https://github.com/xOmarSaeed">
+                <i class="fab fa-github fa-lg white-text fa-2x"> </i>
+              </a>
+            </div>
+          </div>
+          <!-- Grid column -->
+        </div>
+        <!-- Grid row-->
+      </div>
+      <!-- Footer Elements -->
+      <!-- Copyright -->
+      <div class="footer-copyright text-center w-100">© 2020 Copyright:
+        <a style="color:white;" href="https://github.com/xOmarSaeed/"> Omar Saeed</a>
+      </div>
+      <!-- Copyright -->
+    </footer>
+    <!-- Footer -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src ="{{ url_for('static', filename='javascriptf3.js') }}"></script>
+  </body>
+</html>

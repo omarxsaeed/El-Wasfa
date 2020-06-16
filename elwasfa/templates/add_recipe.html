@@ -1,0 +1,147 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Add Recipe
+{% endblock %}
+
+{% block main %}
+    <div class="content-section">
+        <form method="POST" action="" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4 pt-4">Add Your Favorite Recipe</legend>
+                <div class="form-group">
+                    {{ form.recipe_name.label(class="form-control-label") }}
+                    {% if form.recipe_name.errors %}
+                        {{ form.recipe_name(class="form-control is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.recipe_name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.recipe_name(class="form-control") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.description.label(class="form-control-label") }}
+                    {% if form.description.errors %}
+                        {{ form.description(class="form-control is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.description.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.description(class="form-control") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.picture.label() }}
+                    {{ form.picture(class="form-control-file") }}
+                    {% if form.picture.errors %}
+                        {% for error in form.picture.errors %}
+                            <span class="text-danger">{{ error }}</span></br>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4">
+                            {{ form.prep_time.label(class="form-control-label") }}
+                            {% if form.prep_time.errors %}
+                                {{ form.prep_time(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.prep_time.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.prep_time(class="form-control") }}
+                            {% endif %}        
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            {{ form.cook_time.label(class="form-control-label") }}
+                            {% if form.cook_time.errors %}
+                                {{ form.cook_time(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.cook_time.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.cook_time(class="form-control") }}
+                            {% endif %}        
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            {{ form.ready_time.label(class="form-control-label") }}
+                            {% if form.ready_time.errors %}
+                                {{ form.ready_time(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.ready_time.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.ready_time(class="form-control") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form.ingredient_1.label(class="form-control-label") }}
+                    <div class="row">
+                        <div class="col">
+                            <div class="add_btn" onclick="add()">+</div>
+                        </div>
+                        <div class="col">
+                            <div class="rem_btn" onclick="remove()">-</div>
+                        </div>
+                    </div>
+                    {% if form.ingredient_1.errors %}
+                        {{ form.ingredient_1(class="form-control is-invalid") }}
+                        <div id="new_ingr"></div>
+                        <input class="form-control" type="hidden" value="1" id="total_ingr">
+                        <div class="invalid-feedback">
+                            {% for error in form.ingredient_1.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.ingredient_1(class="form-control") }}
+                        <div id="new_ingr"></div>
+                        <input class="form-control" type="hidden" value="1" id="total_ingr">
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.direction_1.label(class="form-control-label") }}    
+                    <div class="row">
+                        <div class="col">
+                            <div class="add_btn" onclick="add_dir()">+</div>
+                        </div>
+                        <div class="col">
+                            <div class="rem_btn" onclick="remove_dir()">-</div>
+                        </div>
+                    </div>
+                    {% if form.direction_1.errors %}
+                        {{ form.direction_1(class="form-control is-invalid") }}
+                        <div id="new_dir"></div>
+                        <input class="form-control" type="hidden" value="1" id="total_dir">
+                        <div class="invalid-feedback">
+                            {% for error in form.direction_1.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.direction_1(class="form-control") }}
+                        <div id="new_dir"></div>
+                        <input class="form-control" type="hidden" value="1" id="total_dir">
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-primary ") }}
+            </div>
+        </form>
+    </div>
+{% endblock main %}

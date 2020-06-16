@@ -1,0 +1,154 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f1f1f1;
+    position: relative;
+    padding-bottom: 123.88px;
+    min-height: 100vh;
+  }
+
+  .card
+{
+    color: black;
+    text-align: left;
+    width: 100%;
+}
+
+  .brand-logo{
+    width:50px;
+  }
+  nav .navbar-brand
+{
+    /* size for brand */
+    font-size: xx-large;
+    font-family: 'Oleo Script';
+}
+  
+  main {
+    margin: 0 auto;
+  }
+
+  .add_btn {
+    margin-bottom:10px;
+    height: 30px;
+    line-height: 30px;
+    width: 30px;
+    font-size: 2em;
+    font-weight: bold;
+    border-radius: 50%;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+  }
+  .rem_btn {
+    margin-bottom:10px;
+    height: 30px;
+    line-height: 25px;
+    width: 30px;
+    font-size: 2em;
+    font-weight: bold;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .account-img {
+    height: 125px;
+    width: 125px;
+    margin-right: 20px;
+    margin-bottom: 16px;
+  }
+  
+  .about-h1 {
+    font-family: Fjalla One;
+    text-align: center;
+  }
+  
+  .account-heading {
+    font-size: 2.5rem;
+  }
+  
+  .recipe-image {
+    width: 100%;
+  }
+
+  #message {
+    display:none;
+    margin-top: 10px;
+    margin-left:5px;
+}
+
+/* Add a green text color and a checkmark when the requirements are right */
+.valid {
+  color: green;
+}
+
+
+/* Add a red text color and an "x" when the requirements are wrong */
+.invalid {
+  color: red;
+}
+
+li
+{
+    padding: 5px;
+}
+
+.recipe-heading {
+  font-family: Lora;
+  text-align: left;
+}
+
+ul
+{
+  columns: 100px 2;
+  font-style: italic;
+  list-style-type:disc
+
+}
+
+.recipe-pagination {
+  margin: 0 auto; 
+  text-align: center;
+}
+
+.timers {
+  text-align: center;
+  font-size: larger;
+  font-family: Roboto;
+}
+
+.description {
+  font-size: larger;
+  font-family: Roboto;
+}
+
+.error-style {
+  text-align: center;
+}
+  
+  footer {
+    text-align: center;
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* position: fixed;
+    z-index: 1; */
+  }
+  
+  @media(max-width:768px) {
+    header { padding: 30px 20px; }
+    header h1 { font-size: 36px; margin-bottom: 22px; }
+    header p { font-size: 18px; }
+    main { width: 100vw}
+  }

@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Recipes
+{% endblock %}
+
+{% block main %}
+<div class="{% if not recipes %} login-height {% endif %}">
+  {% if current_user.username == user.username %}
+    <legend class="border-bottom mb-4 pt-4">My Recipes</legend>
+  {% else %}
+    <legend class="border-bottom mb-4 pt-4">{{user.displayname}}'s Recipes</legend>
+  {% endif %}
+  {% if not recipes%}
+    {% if current_user.username == user.username %}
+      <h4>Sadly you don't have any recipes, yet.</h4>
+      <h4>Feeling like sharing a new recipe with the world? </h4>
+      <h4>    <a href="{{ url_for('recipes.add_recipe') }}">Add one here!</a></h4>
+      {% else %}
+        <h4>{{user.displayname}} doesn't have any recipes, yet.</h4>
+      {% endif %}
+  {% else %}
+  <div class="row row-cols-1 row-cols-md-3">
+    {% for recipe in recipes %}
+      <div class="col mb-4">
+        <div class="card h-100">
+          <img style="height: 300px;" src="{{recipe.picture}}" class="card-img-top" alt="{{ recipe.name }} picture">
+          <div class="card-body">
+            <h5 class="card-title">{{ recipe.name }}</h5>
+          </div>
+          <div class="card-footer">
+            <div>
+              <a class="btn btn-primary" type="submit" href="{{ url_for('recipes.recipe', recipe_id=recipe.id) }}">Read More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}  
+  </div>
+{% endif %}
+</div>
+{% endblock %}
